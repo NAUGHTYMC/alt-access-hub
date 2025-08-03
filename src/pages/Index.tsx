@@ -1,13 +1,15 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Gift, Shield, Zap, Star, Users, Globe } from "lucide-react";
+import { Gift, Shield, Zap, Star, Users, Globe, Settings, Link2 } from "lucide-react";
 import { CategoryCard } from "@/components/CategoryCard";
 import { HeroSection } from "@/components/HeroSection";
 import { StatsSection } from "@/components/StatsSection";
 
 const Index = () => {
+  const navigate = useNavigate();
   const [selectedCategory, setSelectedCategory] = useState<string>("");
 
   const categories = [
@@ -51,12 +53,31 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
+      {/* Navigation */}
+      <nav className="absolute top-0 left-0 right-0 z-50 p-6">
+        <div className="max-w-7xl mx-auto flex items-center justify-between">
+          <h1 className="text-2xl font-bold bg-gradient-hero bg-clip-text text-transparent">
+            TopAlts
+          </h1>
+          <div className="flex items-center gap-4">
+            <Button variant="ghost" onClick={() => navigate('/generate')}>
+              <Link2 className="w-4 h-4 mr-2" />
+              Generate Link
+            </Button>
+            <Button variant="ghost" onClick={() => navigate('/admin')}>
+              <Settings className="w-4 h-4 mr-2" />
+              Admin
+            </Button>
+          </div>
+        </div>
+      </nav>
+
       <HeroSection />
       
       <StatsSection />
 
       {/* Categories Section */}
-      <section className="py-20 px-4">
+      <section id="categories" className="py-20 px-4">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <Badge variant="secondary" className="mb-4 px-4 py-2">
@@ -101,8 +122,7 @@ const Index = () => {
                     size="xl" 
                     className="w-full"
                     onClick={() => {
-                      // This will later redirect to the ad flow
-                      window.location.href = `/ads/${selectedCategory}`;
+                      navigate(`/ads/${selectedCategory}`);
                     }}
                   >
                     <Zap className="w-5 h-5 mr-2" />
